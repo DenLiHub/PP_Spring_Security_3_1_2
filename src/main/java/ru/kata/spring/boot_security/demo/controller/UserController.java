@@ -13,12 +13,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping
 public class UserController {
 
-    private final UserService userService;
-
-    @Autowired
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
 
     @GetMapping("/user")
     public String userPanel(@AuthenticationPrincipal User user, Model model) {

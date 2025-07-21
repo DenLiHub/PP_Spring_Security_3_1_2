@@ -28,6 +28,7 @@ public class AdminController {
     @GetMapping("/new")
     public String newUser(Model model) {
         model.addAttribute("user", new User());
+        model.addAttribute("allRoles", userService.getAllRoles());
         return "newUser";
     }
 
@@ -39,7 +40,12 @@ public class AdminController {
 
     @GetMapping("/{id}/edit")
     public String editUser(@PathVariable("id") long id, Model model) {
+        User user = userService.getUserById(id);
+        if (user == null) {
+            return "redirect:/admin?notfound";
+        }
         model.addAttribute("user", userService.getUserById(id));
+        model.addAttribute("allRoles", userService.getAllRoles());
         return "editUser";
     }
 
@@ -52,6 +58,6 @@ public class AdminController {
     @DeleteMapping("/{id}")
     public String deleteUser(@PathVariable("id") long id) {
         userService.deleteUser(id);
-        return "redirect:/";
+        return "redirect:/admin";
     }
 }
